@@ -25,7 +25,7 @@ import random
 lst = [random.randint(-1000,1000) for x in range(1,1001)]
 print(highest_product(lst))
 
-lst2 = [-10,-10,1,3,2] #expecting 300
+lst2 = [-10,-10,1,3,2] #expecting ((-10,-10,3),300)
 print(highest_product(lst2))
 
 
