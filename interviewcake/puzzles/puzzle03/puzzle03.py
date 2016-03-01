@@ -13,16 +13,7 @@ def highest_product(list_of_ints):
    lst = sorted(list_of_ints) #ensure the list is sorted
                      #would be nice if I could garuntee a sorted list
 
-   #take the top three and bottom three elements of the list
-   bottom_three_lst = lst[-3::]
-   top_three_lst = lst[:3:]
-
-   #combine them
-   lst = bottom_three_lst + top_three_lst
-
-   lst_cmb = combinations(lst,3)
-   
-   lst_tuples = {((x,y,z),x*y*z) for (x,y,z) in lst_cmb }
+   lst_tuples = {((x, y, z), x * y * z) for (x, y, z) in combinations(lst[-3::] + lst[:3:], 3) }
 
    return max(lst_tuples,key=itemgetter(1))
 
