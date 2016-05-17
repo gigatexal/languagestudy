@@ -4,7 +4,7 @@ class tictactoe():
         self.board = {1: ['*', '*', '*'],
                       2: ['*', '*', '*'],
                       3: ['*', '*', '*']}
-        self.placement = (0, 0)
+        self.placement = (0,0)
         self.players = []
 
         #initial setup of the game
@@ -16,21 +16,25 @@ class tictactoe():
           self.players.append(input(question).strip())
 
     def get_inputs(self):
-       row = int(input("Enter in a row (1 - 3): "))
-       col = int(input("Enter in a column (1-3): "))
-       if (row > 0 and row <= 3) and (col > 0 and col <= 3):
-          self.placement = (row, col)
-       else:
-           print("Please enter a row between (1-3) and a column of (1-3).")
-           self.get_inputs()
+           row = input("Enter in a row (1 - 3): ").strip()
+           col = input("Enter in a column (1-3): ").strip()
+           try:
+              row = int(row)
+              col = int(col)
+              self.placement = (row,col)
 
-    def place(self, placement, token):
-        row, col = placement
+           except ValueError:
+               print("Please enter in an integer for row and column, like 1 instead of 1.0 "
+                     "\n and not A or a or any other letter(s)")
+               self.get_inputs()
+
+    def place(self, token):
+        row, col = self.placement
         if self.board[row][col] == '*':
            self.board[row][col] = token
         else:
            print("That's an invalid location, please try again")
-           self.place(placement, token)
+           self.place(self.placement, token)
 
     def show_board(self):
         row = 1
@@ -41,8 +45,8 @@ class tictactoe():
 
 
 
-
 #rudimentary tests
 game = tictactoe()
-
-
+game.get_inputs()
+game.place('x')
+game.show_board()
