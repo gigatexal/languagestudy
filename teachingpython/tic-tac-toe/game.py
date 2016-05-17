@@ -43,6 +43,14 @@ class tictactoe():
             print(row,i)
             row += 1
 
+    def num_empty_squares(self):
+        curr_board = self.board
+        num_empty = 0
+        for index in curr_board.values():
+            for elem in index:
+               if elem == '*':
+                  num_empty += 1
+        return num_empty
 
 
 #rudimentary tests
@@ -50,3 +58,4 @@ game = tictactoe()
 game.get_inputs()
 game.place('x')
 game.show_board()
+print(game.num_empty_squares())
