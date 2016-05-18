@@ -6,9 +6,8 @@ class tictactoe():
                       3: ['*', '*', '*']}
         self.placement = (0,0)
         self.players = []
+        self.is_playable = self.num_empty_squares()
 
-        #initial setup of the game
-        self.get_players()
 
     def get_players(self):
        for i in range(0, self.MAXPLAYERS):
@@ -21,8 +20,10 @@ class tictactoe():
            try:
               row = int(row)
               col = int(col)
-              self.placement = (row,col)
-
+              if row > 0 and row <=3 and col > 0 and col <= 3:
+                  self.placement = (row,col)
+              else:
+                  self.get_inputs()
            except ValueError:
                print("Please enter in an integer for row and column, like 1 instead of 1.0 "
                      "\n and not A or a or any other letter(s)")
@@ -30,11 +31,15 @@ class tictactoe():
 
     def place(self, token):
         row, col = self.placement
+        col -= 1 #hack to deal with the indexes start at 0
         if self.board[row][col] == '*':
            self.board[row][col] = token
         else:
-           print("That's an invalid location, please try again")
-           self.place(self.placement, token)
+           if self.is_playable == 0:
+               print("Run Game Over function")
+           else:
+               print("That's an invalid location, please try again")
+               self.place(self,token) #BUG HERE?
 
     def show_board(self):
         row = 1
@@ -52,10 +57,17 @@ class tictactoe():
                   num_empty += 1
         return num_empty
 
+    #make this part of it's own object?
+    def run_game(self):
+       game = tictactoe()
+       game.get_players()
+       while game.is_playable > 0:
+           game.get_inputs()
+           game.place('x')
+           game.show_board()
+
 
 #rudimentary tests
-game = tictactoe()
-game.get_inputs()
-game.place('x')
-game.show_board()
-print(game.num_empty_squares())
+run = tictactoe()
+run.run_game()
+
