@@ -58,16 +58,13 @@ class tictactoe():
         return num_empty
 
     #make this part of it's own object?
-    def run_game(self):
-       game = tictactoe()
-       game.get_players()
-       while game.is_playable > 0:
-           game.get_inputs()
-           game.place('x')
-           game.show_board()
-
 
 #rudimentary tests
-run = tictactoe()
-run.run_game()
+def main():
+    game = tictactoe()
+    game.get_inputs()
+    game.place('x')
+    game.show_board()
+
+main()
 
