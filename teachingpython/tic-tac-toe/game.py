@@ -30,6 +30,7 @@ class tictactoe():
                self.get_inputs()
 
     def place(self, token):
+        self.get_inputs()
         row, col = self.placement
         col -= 1 #hack to deal with the indexes start at 0
         if self.board[row][col] == '*':
@@ -62,7 +63,6 @@ class tictactoe():
 #rudimentary tests
 def main():
     game = tictactoe()
-    game.get_inputs()
     game.place('x')
     game.show_board()
 
