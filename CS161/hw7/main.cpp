@@ -143,6 +143,7 @@ int showBooksByAuthor(string name){
 	int itemsFound = 0;
 	string searchVal = _toLower(name);
 	string author;
+	sortResults("author");
 	//creating a vector of type int seems to be the only way to iterate by index with vectors
 	for (vector<int>::size_type i = 0; i < books.size(); i++){
 		author = _toLower(books[i].author);
@@ -158,6 +159,7 @@ int showBooksByTitle(string name){
 	int itemsFound = 0;
 	string searchVal = _toLower(name);
 	string title;
+	sortResults("title");
 	//creating a vector of type int seems to be the only way to iterate by index with vectors
 	for (vector<int>::size_type i = 0; i < books.size(); i++){
 		title = _toLower(books[i].title);
