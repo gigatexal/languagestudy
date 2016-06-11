@@ -1,7 +1,7 @@
 import os
 import sys
 import re
-
+import fileinput
 
 def get_path(path=sys.argv[1]):
     
@@ -31,13 +31,9 @@ def get_files_to_edit(all_files,extension='sch'):
 def main():
    path = get_path()
    raw_files = get_files(path)
-   files = get_files_to_edit(raw_files,'sch')
-   for file in files:
-      with open(file,'r+') as curr_file:
-         for line in curr_file:
-            print(line)
-            re.sub('SET ANSI PADDING OFF','SET ANSI PADDING ON',line)#fix
-            print(line)
-      
+   ile = get_files_to_edit(raw_files,'sch')
+   for# line in fileinput.input(files, inplace=1, backup='.bak'):
+ 
+    
 
 main()
