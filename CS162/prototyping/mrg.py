@@ -1,23 +1,15 @@
+import random as rnd
+
 unsorted_arr = [3,4,9,8,2,1,7]
 
 def _mid(lst):
-   if lst is not None and len(lst) > 1:
-      return int(len(lst)/2)
-   if len(lst) == 1:
-      return 1
-   if lst is None or len(lst) < 1:
-      return None #should throw an exception, handle it in the caller
+   return int(len(lst)/2)
 
-def _split(lst,left,right):
-   midp = mid(lst)
-   for elem in lst[0:midp]:
-      left.append(elem)
-   for elem in lst[midp:]:
-      right.append(elem)
+r = []
+print(_mid(r))
+for i in range(50):
+   arr = [x for x in range(0,int(rnd.random()*10)+1)]
+   print(len(arr))
+   print("midpoint is ",_mid(arr))
 
-def mrgsort(lst)#inplace sort
-   right = []
-   left = []
-   pivot = _mid(lst)
-   
 
