@@ -18,16 +18,10 @@ def _split(lst):
 
 def _merge(left,right):
    combined = []
-   for elem in left:
-      combined.append(elem)
-   for elem in right:
-      combined.append(elem)
-   return combined
+   combined += left[0:]
+   combined += right[0:]
+   return combined;   
 
-def mrgSort(lst):
-   srtd = []
-   unsorted = lst;
-   pivot = unsorted.pop(_mid(unsorted))
-   left,right = _split(unsorted)
+
+def _mrgSort(lst):
    
-
