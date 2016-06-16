@@ -25,14 +25,8 @@ def get_files_to_edit(all_files,extension='sch'):
          yield (file)
 
 def find_in_files_and_replace(files_to_edit,string_to_search,string_to_replace):
-    for file in files_to_edit: 
-       with open(file,'r+') as f:
-          curr_file = f.read()
-          f.seek(0)
-          for line in curr_file:
-             line = line.replace(string_to_search, string_to_replace)
-          f.write(curr_file)
- 
+   for line in fileinput.input(files_to_edit,inplace=True, backup='.bak'):
+      sys.stdout.write(line.replace(string_to_search,string_to_replace)) 
 
 def main():
    path = get_path()
