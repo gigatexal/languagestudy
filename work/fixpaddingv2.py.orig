@@ -40,12 +40,11 @@ def main():
 def UI():
    help_flags = ['--?','-?','--help','-help']
    path = get_path()
-   while True and path is not None:
-     if path.replace('/','') in help_flags:
-        print("Replaces the line SET ANSI PADDING OFF to SET ANSI PADDING ON in .SCH files")
-        print("Usage: fixpadding.exe <path> or fixpadding.py <path> e.g fixpadding.exe \\unc\\snapshots\\")
-        break
-   
+   if path.replace('/','') in help_flags:
+     print("Replaces the line SET ANSI PADDING OFF to SET ANSI PADDING ON in .SCH files")
+     print("Usage: fixpadding.exe <path> or fixpadding.py <path> e.g fixpadding.exe \\unc\\snapshots\\")
+     return
+ 
    raw_files = get_files(path)
    files_to_edit = get_files_to_edit(raw_files)
    for file in files_to_edit:

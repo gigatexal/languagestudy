@@ -3,15 +3,17 @@ import sys
 import re
 import fileinput
 
-def get_path(path=sys.argv[1]):
-    
-    user_path = re.sub('/+','/',path)
 
-    if (user_path[len(user_path)-1]) != '/':
-       user_path = user_path + '/'
-
-    return(user_path)
-
+def get_path():
+   path = sys.argv
+   if path is not None: 
+      user_path = re.sub('/+','/',path[1])
+      if (user_path[len(user_path)-1]) != '/':
+         user_path = user_path + '/'
+      return(user_path)
+   else:
+      print("Please enter in a path or -? --help for help")
+      get_path()
 
 def get_files(path):
    all_files = os.walk(path)
@@ -35,5 +37,20 @@ def main():
    find_in_files_and_replace(files_to_edit,'SET ANSI PADDING OFF','SET ANSI PADDING ON')
 
         
+def UI():
+   help_flags = ['--?','-?','--help','-help']
+   path = get_path()
+   if path.replace('/','') in help_flags:
+     print("Replaces the line SET ANSI PADDING OFF to SET ANSI PADDING ON in .SCH files")
+     print("Usage: fixpadding.exe <path> or fixpadding.py <path> e.g fixpadding.exe \\unc\\snapshots\\")
+     return
+ 
+   raw_files = get_files(path)
+   files_to_edit = get_files_to_edit(raw_files)
+   for file in files_to_edit:
+       find_in_files_and_replace(file,'SET ANSI PADDING OFF','SET ANSI PADDING ON')
+       print("Edited " + str(file))      
 
-main()
+
+UI()
+#main()
