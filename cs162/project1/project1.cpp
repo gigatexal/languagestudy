@@ -1,54 +1,33 @@
-/* compile via g++ -o proj1 project1.cpp */
 #include <iostream>
 #include <string>
+#include <iomanip>
 using namespace std;
 
-/* singly linked list */
-struct Node {
-   string _item;
-   float _cost;
-   int _qty;
-   Node *_next;
-};
-
-class simpleLinkedList {
-   private:
-      Node _head;
-      Node _tail;
-      int _size;
-   public:
-      simpleLinkedList();
-      ~simpleLinkedList();
-      void add_back(Node n);
-      int size();
-      void get_first();
-};
+void display_output(float money);
 
 int main(){
-   simpleLinkedList *list = new simpleLinkedList();
-   cout << list->size() << endl;
-
+   string item;
+   char user_input;
+   float cost;
+   while (true){
+     cout << "Enter in the item: ";
+     getline(cin,item);
+     cout << "Enter in the price: ";
+     cin >> cost;
+     cout << "continue ? y - to continue, n - to exit: " << endl;
+     cin  >> user_input;
+     if (user_input == 'n' || user_input == 'N'){
+        break;
+     }
+   }
 
    return 0;
 }
 
-simpleLinkedList::simpleLinkedList(){
-   _head._next = &_tail;
-   _tail._next = 0; //null, empty, end here
-   _size = 0;
-};
-
-simpleLinkedList::~simpleLinkedList(){
-   //TODO: add destructor stuff;
-};
-
-void simpleLinkedList::add_back(Node n){
-   //TODO: finish me   
-   _size++;
+void display_output(float money){
+   //fix it so that it doesn't round up
+   cout.setf(ios::fixed, ios::floatfield);
+   cout.setf(ios::showpoint);
+   cout.precision(2);
+   cout << money << endl;
 }
-
-int simpleLinkedList::size(){
-   return _size;
-};
-
-
