@@ -1,56 +1,58 @@
+"""Usage: FixAnsiPadding [-h | --help] [--quiet | --verbose] [--inputfile] [INPUT ...]
+
+-h --help      show this
+--quiet        print less text
+--verbose      print more text
+INPUT          FILES or DIRECTORIES to edit 
+
+"""
 import os
-import sys
-import re
-import fileinput
+from docopt import docopt 
 
+def replace_in_file(input_file,replace_text,with_this_text): #having fun with argument names
+   with open(input_file,"r") as curr_file:
+      contents = curr_file.read().replace(replace_text,with_this_text)
+   
+   with open(input_file,"w") as curr_file:
+      curr_file.write(contents)
+   
 
-def get_path():
-   path = sys.argv
-   if path is not None: 
-      user_path = re.sub('/+','/',path[1])
-      if (user_path[len(user_path)-1]) != '/':
-         user_path = user_path + '/'
-      return(user_path)
-   else:
-      print("Please enter in a path or -? --help for help")
-      get_path()
-
-def get_files(path):
-   all_files = os.walk(path)
-   target_files = ((dir + '/' + file) for (dir, middir, files) in all_files for file in files)
-   return (target_files)
-
-def get_files_to_edit(all_files,extension='sch'):
-   expr = re.compile('\.')
-   for file in all_files:
-      if re.split(expr,file)[-1] == extension:
-         yield (file)
-
-def find_in_files_and_replace(files_to_edit,string_to_search,string_to_replace):
-   for line in fileinput.input(files_to_edit,inplace=True, backup='.bak'):
-      sys.stdout.write(line.replace(string_to_search,string_to_replace)) 
-
-def main():
-   path = get_path()
-   raw_files = get_files(path)
-   files_to_edit = get_files_to_edit(raw_files)
-   find_in_files_and_replace(files_to_edit,'SET ANSI PADDING OFF','SET ANSI PADDING ON')
-
-        
-def UI():
-   help_flags = ['--?','-?','--help','-help']
-   path = get_path()
-   if path.replace('/','') in help_flags:
-     print("Replaces the line SET ANSI PADDING OFF to SET ANSI PADDING ON in .SCH files")
-     print("Usage: fixpadding.exe <path> or fixpadding.py <path> e.g fixpadding.exe \\unc\\snapshots\\")
-     return
+if __name__ == '__main__':
+   args           = docopt(__doc__)
+   quiet          = args['--quiet']
+   verbose        = args['--verbose']
+   user_input     = args['INPUT']
+   extension      = '.sch' 
+   
+   files = []
+   #for each element in user_input check for if its a path or a full file
+   for elem in user_input:
+      if os.path.isdir(elem):
+         for dir,subdir,file in os.walk(os.path.abspath(elem)):
+            for f in file: 
+               rel_path = os.path.join(dir,f)
+               files.append(os.path.abspath(rel_path))
  
-   raw_files = get_files(path)
-   files_to_edit = get_files_to_edit(raw_files)
-   for file in files_to_edit:
-       find_in_files_and_replace(file,'SET ANSI PADDING OFF','SET ANSI PADDING ON')
-       print("Edited " + str(file))      
+      elif os.path.isfile(elem):
+         if os.path.splitext(elem)[1] == extension:
+            files.append(os.path.abspath(elem)) 
+
+   #actually edit the files
+   for file in files:
+      replace_in_file(file,"SET ANSI PADDING OFF","SET ANSI PADDING ON")
+
+   print(str(len(files)) + ' file(s) updated.')
+
+   
 
 
-UI()
-#main()
+
+
+ 
+      
+
+
+
+
+
+ 
