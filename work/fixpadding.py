@@ -1,9 +1,7 @@
-"""Usage: FixAnsiPadding [-h | --help] [--quiet | --verbose] [--inputfile] [INPUT ...]
+"""Usage: FixAnsiPadding [-h | --help] INPUT ...]
 
 -h --help      show this
---quiet        print less text
---verbose      print more text
-INPUT          FILES or DIRECTORIES to edit 
+INPUT          FILES to edit or DIRECTORIES to search recursively for files to edit 
 
 """
 import os
