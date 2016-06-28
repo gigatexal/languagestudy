@@ -20,24 +20,24 @@ if __name__ == '__main__':
    user_input     = args['INPUT']
    extension      = '.sch' 
    
-   files_to_edit = []
+   files = []
    #for each element in user_input check for if its a path or a full file
    for elem in user_input:
       if os.path.isdir(elem):
-         for dir,subdir,files in os.walk(os.path.abspath(elem)):
-            for file in files: 
-               rel_path = os.path.join(dir,file)
-               files_to_edit.append(os.path.abspath(rel_path))
+         for dir,subdir,file in os.walk(os.path.abspath(elem)):
+            for f in file: 
+               rel_path = os.path.join(dir,f)
+               files.append(os.path.abspath(rel_path))
  
       elif os.path.isfile(elem):
          if os.path.splitext(elem)[1] == extension:
-            files_to_edit.append(os.path.abspath(elem)) 
+            files.append(os.path.abspath(elem)) 
 
    #actually edit the files
-   for file in files_to_edit:
+   for file in files:
       replace_in_file(file,"SET ANSI PADDING OFF","SET ANSI PADDING ON")
 
-   print(str(len(files_to_edit)) + ' file(s) updated.')
+   print(str(len(files)) + ' file(s) updated.')
 
    
 
