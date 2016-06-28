@@ -1,4 +1,4 @@
-"""Usage: FixAnsiPadding [-h | --help] INPUT ...]
+"""Usage: FixAnsiPadding [-h | --help] [INPUT ...]
 
 -h --help      show this
 INPUT          FILES to edit or DIRECTORIES to search recursively for files to edit 
@@ -17,8 +17,6 @@ def replace_in_file(input_file,replace_text,with_this_text): #having fun with ar
 
 if __name__ == '__main__':
    args           = docopt(__doc__)
-   quiet          = args['--quiet']
-   verbose        = args['--verbose']
    user_input     = args['INPUT']
    extension      = '.sch' 
    
