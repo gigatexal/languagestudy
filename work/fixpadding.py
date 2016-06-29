@@ -14,7 +14,16 @@ def replace_in_file(input_file,replace_text,with_this_text): #having fun with ar
    with open(input_file,"w") as curr_file:
       curr_file.write(contents)
    
-
+"""
+   more or less equiv to:
+   $configFiles = get-childitem <UNC PATH> *.txt -rec
+   foreach ($file in $configFiles)
+   {
+   (get-content $file.PSPath) |
+   foreach-object { $_ -replace "SET ANSI PADDING OFF", "SET ANSI PADDING ON" } |
+   set-content $file.PSPath
+   }
+"""
 if __name__ == '__main__':
    args           = docopt(__doc__)
    user_input     = args['INPUT']
