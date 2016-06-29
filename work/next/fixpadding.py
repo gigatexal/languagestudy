@@ -12,7 +12,7 @@ INPUT                    FILES to edit or DIRECTORIES to search recursively for 
 import os
 from docopt import docopt
 
-def files_by_dir(dirs):
+def files_by_dir(dirs=user_input):
    for dir in dirs:
       for _dir,subdir,files in os.walk(dir):
          for file in files:
@@ -20,16 +20,14 @@ def files_by_dir(dirs):
             yield os.path.abspath(curr_file_path)   
 
 
-def get_files_from_input(user_input):
+def get_files_from_input(files=user_input):
    for item in user_input:
       if os.path.isfile(item):
          yield item
 #
 #
 def test():
-   yield from files_by_dir(user_input)
-#   yield from get_files_from_input(user_input)
-
+   
 #   
 #
 if __name__ == '__main__':
