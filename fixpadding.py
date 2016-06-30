@@ -64,7 +64,7 @@ if __name__ == '__main__':
    num_files_modified = 0
    for file in replication_files:
       if (replace_in_files(file,"SET ANSI PADDING OFF","SET ANSI PADDING ON")):
-         num_files_modified += 1 
+         num_files_modified +=1 
 
    print(str(num_files_modified) + " file(s) fixed.") 
   
