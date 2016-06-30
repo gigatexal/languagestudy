@@ -10,9 +10,10 @@ INPUT                    FILES to edit or DIRECTORIES to search recursively for 
 
 """
 import os
+import itertools
 from docopt import docopt
 
-def files_by_dir(dirs=user_input):
+def files_by_dir(dirs):
    for dir in dirs:
       for _dir,subdir,files in os.walk(dir):
          for file in files:
@@ -20,23 +21,35 @@ def files_by_dir(dirs=user_input):
             yield os.path.abspath(curr_file_path)   
 
 
-def get_files_from_input(files=user_input):
+def files_from_input(files):
    for item in user_input:
       if os.path.isfile(item):
-         yield item
-#
-#
-def test():
-   
-#   
-#
+         yield os.path.abspath(item)
+
+
+def combine_iterators(*args):
+   yield from itertools.chain(args)
+  
+def has_extension(**kwargs):
+
+
 if __name__ == '__main__':
    args = docopt(__doc__)
    quiet      = args['--quiet']
    verbose    = args['--verbose']
    exts       = args['--extension']
    user_input = args['INPUT']
+   print(args)
+  
+   dirs           = files_by_dir(user_input)
+   files_from_cli = files_from_input(user_input)
+   
+  
 
-   a = test();
-   print(next(a))
+   files = ( file for file in itertools.chain(dirs,files_from_cli) 
+   
+
+
+
+
 
