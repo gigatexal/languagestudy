@@ -19,7 +19,7 @@ def files_by_dir(dirs):
 
 
 def files_from_input(files):
-   for item in user_input:
+   for item in files:
       if os.path.isfile(item):
          yield os.path.abspath(item)
 
