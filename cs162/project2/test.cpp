@@ -40,7 +40,7 @@ int main(){
   for (int i = 0; i < fileLen; i++){
      cout << songs[i].name << " : " << songs[i].duration << " : " << songs[i].duration2 << endl;
   }   
-   
+ 
   infile.close();
   return 0;
 }
