@@ -9,6 +9,7 @@ INPUT                    FILES to edit or DIRECTORIES to search recursively for 
 import os
 import itertools
 from docopt import docopt
+#TODO: fix corruption - done open('data.txt','r', encoding='utf-16-le')
 #TODO: import multiprocessing and make multi-threaded
 
 def files_by_dir(dirs):
@@ -42,14 +43,15 @@ def _get_file_hash(file):
       return hash(curr_file.read())
 
 def replace_in_files(file_to_edit,replace_this,with_this):
-   before_hash    = _get_file_hash(file_to_edit)
+   #before_hash    = _get_file_hash(file_to_edit)
    _replace_in_file(file_to_edit,replace_this,with_this)
-   after_hash     = _get_file_hash(file_to_edit)
+   #after_hash     = _get_file_hash(file_to_edit)
+   """
    if before_hash == after_hash:
       return False
    else:
       return True
-
+   """
 
 if __name__ == '__main__':
    args = docopt(__doc__)
@@ -62,12 +64,12 @@ if __name__ == '__main__':
    files             = itertools.chain(dirs,files_from_cli)
    replication_files = (file for file in files if os.path.splitext(file)[1] == '.sch')
    
-   num_files_modified = 0
    for file in replication_files:
-      if (replace_in_files(file,"SET ANSI PADDING OFF","SET ANSI PADDING ON")):
-         num_files_modified += 1 
+      replace_in_files(file,"SET ANSI PADDING OFF","SET ANSI PADDING ON")):
+ 
 
-   print(str(num_files_modified) + " file(s) fixed.") 
+   print("complete") 
+
   
 
 
