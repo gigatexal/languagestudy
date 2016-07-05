@@ -9,6 +9,7 @@ INPUT                    FILES to edit or DIRECTORIES to search recursively for 
 import os
 import itertools
 from docopt import docopt
+#TODO: import multiprocessing and make multi-threaded
 
 def files_by_dir(dirs):
    for dir in dirs:
