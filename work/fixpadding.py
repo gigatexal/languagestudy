@@ -31,27 +31,27 @@ def combine_iterators(*args):
   
 
 def _replace_in_file(file_to_edit,replace_this,with_this):
-   with open(file_to_edit,'r') as curr_file:
+   with open(file_to_edit,'r',encoding='utf-16-le') as curr_file:
       contents = curr_file.read()
       contents = contents.replace(replace_this,with_this)
    
-   with open(file_to_edit,'w+') as curr_file:
+   with open(file_to_edit,'w+',encoding='utf-16-le') as curr_file:
       curr_file.write(contents)  
 
 def _get_file_hash(file):
-   with open(file,'r') as curr_file:
+   with open(file,'r',encoding='utf-16-le') as curr_file:
       return hash(curr_file.read())
 
 def replace_in_files(file_to_edit,replace_this,with_this):
-   #before_hash    = _get_file_hash(file_to_edit)
+   before_hash    = _get_file_hash(file_to_edit)
    _replace_in_file(file_to_edit,replace_this,with_this)
-   #after_hash     = _get_file_hash(file_to_edit)
-   """
+   after_hash     = _get_file_hash(file_to_edit)
+   
    if before_hash == after_hash:
       return False
    else:
       return True
-   """
+   
 
 if __name__ == '__main__':
    args = docopt(__doc__)
@@ -63,9 +63,10 @@ if __name__ == '__main__':
   
    files             = itertools.chain(dirs,files_from_cli)
    replication_files = (file for file in files if os.path.splitext(file)[1] == '.sch')
+
    
    for file in replication_files:
-      replace_in_files(file,"SET ANSI PADDING OFF","SET ANSI PADDING ON")):
+      replace_in_files(file,"SET ANSI_PADDING OFF","SET ANSI_PADDING ON")):
  
 
    print("complete") 
