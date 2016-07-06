@@ -9,8 +9,7 @@ INPUT                    FILES to edit or DIRECTORIES to search recursively for 
 import os
 import itertools
 from docopt import docopt
-#TODO: fix corruption - done open('data.txt','r', encoding='utf-16-le')
-#TODO: import multiprocessing and make multi-threaded
+import multiprocessing as mp
 
 def files_by_dir(dirs):
    for dir in dirs:
@@ -66,10 +65,9 @@ if __name__ == '__main__':
 
    
    for file in replication_files:
-      replace_in_files(file,"SET ANSI_PADDING OFF","SET ANSI_PADDING ON")):
+      replace_in_files(file,"SET ANSI_PADDING OFF","SET ANSI_PADDING ON")
  
-
-   print("complete") 
+   print("done.") 
 
   
 
