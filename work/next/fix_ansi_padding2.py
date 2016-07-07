@@ -1,17 +1,41 @@
+"""Usage: fixansipadding [-h | --help] [-v | --version] (INPUT ...)
+
+Options:
+-h --help                Show this
+-v --version             Show version
+INPUT                    FILES to edit or DIRECTORIES to search recursively for files to edit
+
+"""
+from docopt import docopt
 import os
 import multiprocessing as mp
-import sys
 
-def get_files(path, extension='.sch'):#currently supports only one extension, must be .txt for example
-    for dir,subdir,files in os.walk(path):
-        for file in files:
-            curr_file = os.path.join(dir,file)
-            full_path = os.path.abspath(curr_file)
-            ext = os.path.splitext(full_path)[1]
+def _abspath(file):
+    return os.path.abspath(file)
 
-            if ext == extension:
-                yield full_path
+def _splitext(file):
+    return os.path.splitext(file)
 
+def _isfile(file):
+    return os.path.isfile(file)
+
+def _join(dir,file):
+    return os.path.join(dir, file)
+
+def _get_files_by_path(paths, extension='.sch'): # currently supports only one extension, must be .txt for example
+        yield from (_abspath(_join(dir, file))
+                    for path in paths
+                    for dir, subdir, files in os.walk(path)
+                    for file in files
+                    if _splitext(file)[1] == extension
+                   )#kinda looks like SQL
+
+def _get_files(files,extension='.sch'):
+    yield from (file for file in files if _isfile(file) and _splitext(file)[1] == extension)
+
+def _combine_iters(*args): # more or less like itertools.chain or zip
+    for elem in args:
+           yield from elem
 
 def replace_in_files(file):
     with open(file, 'r', encoding='utf-16-le') as f:
@@ -42,8 +66,14 @@ def run(multithreaded=False, files=None, apply_func=None):
 
 
 if __name__ == '__main__':
-    print(run(multithreaded=True, files=get_files('c:\\test\\unc\\'), apply_func=replace_in_files))
+    args = docopt(__doc__, version='fixansipadding v 1.0')
+    user_inputs = args['INPUT']
 
+    validated_files = _get_files(user_inputs)
+    validated_paths = _get_files_by_path(user_inputs)
+    files = _combine_iters(validated_files, validated_paths)
+
+    print(str(sum(run(multithreaded=True,files=files,apply_func=replace_in_files))) + " file(s) fixed.")
 
 
 
