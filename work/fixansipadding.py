@@ -66,6 +66,9 @@ def run(multithreaded=False, files=None, apply_func=None):
 
 
 if __name__ == '__main__':
+    if sys.platform.startswith('win'):
+       mp.freeze_support()
+    
     args = docopt(__doc__, version='fixansipadding v 1.0')
     user_inputs = args['INPUT']
 
