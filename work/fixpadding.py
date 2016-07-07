@@ -68,7 +68,10 @@ def run(multithreaded=False, files=None, apply_func=None):
 if __name__ == '__main__':
     args = docopt(__doc__, version='fixansipadding v 1.0')
     user_inputs = args['INPUT']
-
+    
+    if sys.platform.startswith('win'):
+       mp.freeze_support()
+    
     validated_files = _get_files(user_inputs)
     validated_paths = _get_files_by_path(user_inputs)
     files = _combine_iters(validated_files, validated_paths)
