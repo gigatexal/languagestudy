@@ -14,6 +14,7 @@ struct Song {
 };
 
 const char *FILENAME = "songs.txt";
+const int MAXSONGS = 2048;
 
 template <class T> void get(T &var);
 void get(char str[], const unsigned int size); 
@@ -23,22 +24,52 @@ bool get(Song songs[], const char filename[], unsigned int numLines);
 bool writeOut(Song songs[], const char filename[], unsigned int numLines);
 
 int main(){
-   Song songs[1024];
-   
-   bool got = get(songs,FILENAME,getNumLines(FILENAME));
-   if (got){
-      cout << "got" << endl;
-   }
-   else {
-      cout << "not got" << endl;
-   }
-   bool written = writeOut(songs,"OUTPUT.txt",getNumLines("songs.txt"));
-   if (written){
-      cout << "wrote" << endl;
-   }
-   else {
-      cout << "not written" << endl;
-   }
+   Song songs[MAXSONGS];
+   //begin UI
+   char input = 'n';
+   //print top menu to the screen
+   /*
+   enter a new song info
+   display current songs
+   remove a song by index
+   search for songs by artist
+   search for songs by album
+   quit
+   */
+   while (input != 'q'){
+   cout << setw(60) << setfill('_') << left << "Enter in a new song's info " << right << "(n)" << endl;
+   cout << setfill('_') << setw(40) << left << "(d)" << right << "Display the current library " << endl;
+   cout << setfill('_') << setw(40) << left << "(r)" << right << "Remove a song by a given index " << endl;
+   cout << setfill('_') << setw(40) << left << "(a)" << right << "Search for songs by a given artist " << endl;
+   cout << setfill('_') << setw(40) << left << "(b)" << right << "Search for songs by album " << endl;
+   cout << setfill('_') << setw(40) << left << "(q)" << right << "Quit " << endl;
+   cout << "Enter your selection here: ";
+   get(input);
+   switch (input){
+      case 'n': 
+         cout << "new song" << endl;
+         break;
+      case 'd':
+         cout << "display" << endl;
+         break;
+      case 'r':
+         cout << "remove" << endl;
+         break;
+      case 'a':
+         cout << "srch by artist" << endl;
+         break;
+      case 'b':
+         cout << "srch by album" << endl;
+         break;
+      case 'q':
+         cout << "quit" << endl;
+         break;
+      default:
+         cout << "please enter in a valid selection" << endl;
+         break;
+    }
+   //
+   } 
    return 0;
 }
 
@@ -57,7 +88,7 @@ bool get(Song songs[], const char filename[], unsigned int numLines){
           songs[i] = song;       
           i++; 
           loaded = true;
-   } 
+   	  } 
    }
    return loaded;
 }
