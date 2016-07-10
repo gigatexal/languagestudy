@@ -24,15 +24,21 @@ bool isValid(Song song);
 bool get(Song songs[], const char filename[], unsigned int numLines);
 bool writeOut(Song songs[], const char filename[], unsigned int numLines);
 
+
+
+
 int main(){
    Song songs[MAXSONGS];
    get(songs,FILENAME,getNumLines(FILENAME));
-   Song songss[0];
-   strncpy(songss[0].title,"",sizeof(songss[0].title));
-   cout << songss[0].title << endl;   
+   int numSongs = 0;
+   for (auto s: songs){
+      if (isValid(s)){
+         numSongs++;
+       }
+   }
+   cout << numSongs << endl;  
    //begin UI
    char input = 'n';
-   cout << songs[100].title << endl;   
    while (input != 'q'){
    cout << setw(60) << setfill('_') << left << "Enter in a new song's info " << right << "(n)" << endl;
    cout << setw(60) << setfill('_') << left << "Display currently loaded songs from the DB " << right << "(d)" << endl;
@@ -150,11 +156,11 @@ unsigned int getNumLines(const char filename[]){
 }
 
 bool isValid(Song song){
-   bool valid = song.title 
-       && song.artist 
-       && song.duration_minutes 
-       && song.duration_seconds 
-       && song.album;
+   bool valid = strlen(song.title) 
+       && strlen(song.artist) 
+       && strlen(song.duration_minutes) 
+       && strlen(song.duration_seconds) 
+       && strlen(song.album);
 
    return valid;
 }
