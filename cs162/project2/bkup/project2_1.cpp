@@ -15,7 +15,7 @@ struct Song {
 };
 
 const char *FILENAME = "songs.txt";
-const int MAXSONGS = 1024;
+const int MAXSONGS = 18;
 
 template <class T> void get(T &var);
 void get(char str[], const unsigned int size); 
@@ -23,13 +23,12 @@ unsigned int getNumLines(const char filename[]);
 bool isValid(Song song);
 bool get(Song songs[], const char filename[], unsigned int numLines);
 bool writeOut(Song songs[], const char filename[], unsigned int numLines);
+void _init(Song songs[], unsigned int size);
 
 int main(){
    Song songs[MAXSONGS];
    get(songs,FILENAME,getNumLines(FILENAME));
-   Song songss[0];
-   strncpy(songss[0].title,"",sizeof(songss[0].title));
-   cout << songss[0].title << endl;   
+      
    //begin UI
    char input = 'n';
    cout << songs[100].title << endl;   
@@ -68,6 +67,9 @@ int main(){
    } 
    return 0;
 }
+//void _empty(Song song){
+   
+//void _init(Song songs[], unsigned int size){
    
    
 bool get(Song songs[], const char filename[], unsigned int numLines){
