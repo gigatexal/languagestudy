@@ -28,8 +28,11 @@ void displaySongs(const Song songs[]);
 void displayChoices();
 void addSong(Song songs[]);
 void removeSong(Song songs[]);
-
-
+void _toLower(const char in[], const unsigned int size_in, char out[], const unsigned int size_out);
+void displaySong(const Song song, int index);
+void displaySongsByGivenArtist(Song song[], const unsigned int size);
+void displaySongHeader();
+void displaySongsByGivenAlbum(Song song[], const unsigned int size);
 
 int main(){
    //greeting
@@ -42,8 +45,11 @@ int main(){
    displaySongs(songs);
    //begin UI
    char input = 'n';
+   char testME[CHAR_MAX];
+   strncpy(testME,"Blink 182",sizeof(testME));
    while (input != 'q'){
    displayChoices();
+   cout << endl;
    cout << "Enter in your selection here: ";
    get(input);
    switch (input){
@@ -58,10 +64,12 @@ int main(){
          displaySongs(songs); 
          break;
       case 'a':
-         cout << "srch by artist" << endl;
+         displaySongsByGivenArtist(songs, sizeof(songs)/sizeof(Song));
+         cout << endl; 
          break;
       case 'b':
-         cout << "srch by album" << endl;
+         displaySongsByGivenAlbum(songs,sizeof(songs)/sizeof(Song));
+         cout << endl;
          break;
       case 'q':
          cout << "quit" << endl;
@@ -73,6 +81,66 @@ int main(){
    } 
    return 0;
 }
+
+void displaySongsByGivenArtist(Song song[], const unsigned int size){
+   cout << "Enter in an artist's name : ";
+   char name[CHAR_MAX];
+   get(name,sizeof(name));
+   int index = 0;
+   displaySongHeader();
+   while (index < size){
+   if (strcmp(song[index].artist,name)==0){
+      displaySong(song[index],index);
+   }
+   index++;
+   }
+}
+
+void displaySongsByGivenAlbum(Song song[], const unsigned int size){
+   cout << "Enter in an album title : ";
+   char name[CHAR_MAX];
+   get(name,sizeof(name));
+   int index = 0;
+   displaySongHeader();
+   while (index < size){
+   if (strcmp(song[index].album,name)==0){
+      displaySong(song[index],index);
+   }
+   index++;
+   }
+}
+
+
+
+void displaySongHeader(){
+      cout << setw(10) << left << "Index"
+           << setw(30) << left << "Title"
+           << setw(45) << left << "Artist"
+           << setw(10) << left << "Duration"
+           << setw(20) << left << "Album"
+           << endl;
+}
+void displaySong(const Song song, int index){
+      char duration[CHAR_MAX];
+      strcpy(duration,"");
+      cout << setw(10) << left << index
+           << setw(30) << left << song.title
+           << setw(45) << left << song.artist
+           << setw(10) << left << strcat(strcat(strcat(duration,song.duration_minutes),":"),song.duration_seconds)
+           << setw(20) << left << song.album
+           << endl;
+}
+
+void _toLower(const char in[], const unsigned int size_in, char out[], const unsigned int size_out){
+   if (size_in == size_out){
+   for (int i = 0; i < size_in; i++){
+      out[i] = tolower(in[i]);
+      }
+   }
+}
+
+
+
 void removeSong(Song songs[]){
    int length = countSongs(songs);
    if (length == 0){
@@ -89,8 +157,6 @@ void removeSong(Song songs[]){
    }   
    cout << "The song has been deleted. " <<endl;
 }
-
-
 
 void addSong(Song songs[]){
    unsigned int length = countSongs(songs);
