@@ -5,7 +5,7 @@
 #include <fstream>
 #include <cstdlib>
 using namespace std;
-//TODO: change seconds and minutes to ints using getline and atoi then write with just >> duration_seconds
+//making the duration_minutes and duration_seconds fields character arrays was a mistake
 struct Song {
    char title[CHAR_MAX];
    char artist[CHAR_MAX];
@@ -109,9 +109,7 @@ void displaySongsByGivenAlbum(Song song[], const unsigned int size){
    index++;
    }
 }
-
-
-
+//print out a simple header
 void displaySongHeader(){
       cout << setw(10) << left << "Index"
            << setw(30) << left << "Title"
@@ -120,6 +118,8 @@ void displaySongHeader(){
            << setw(20) << left << "Album"
            << endl;
 }
+
+//given a song, display it
 void displaySong(const Song song, int index){
       char duration[CHAR_MAX];
       strcpy(duration,"");
@@ -131,6 +131,7 @@ void displaySong(const Song song, int index){
            << endl;
 }
 
+//_toLower is a non-mutating lower-caser, passing in an input cstring, and size and get an output cstring given it's size
 void _toLower(const char in[], const unsigned int size_in, char out[], const unsigned int size_out){
    if (size_in == size_out){
    for (int i = 0; i < size_in; i++){
@@ -139,14 +140,13 @@ void _toLower(const char in[], const unsigned int size_in, char out[], const uns
    }
 }
 
-
-
+//delete a song given an index, does bounds checking
 void removeSong(Song songs[]){
    int length = countSongs(songs);
    if (length == 0){
       cout << "************* There are no songs to delete. *************** " << endl;
       return;
-   }
+   } 
    int index;
    cout << "\nDelete a song from the database." << endl;
    cout << "Enter the index of the song you wish you delete: ";
@@ -158,6 +158,7 @@ void removeSong(Song songs[]){
    cout << "The song has been deleted. " <<endl;
 }
 
+//add a song to the inmemory database
 void addSong(Song songs[]){
    unsigned int length = countSongs(songs);
    Song temp;
@@ -178,6 +179,7 @@ void addSong(Song songs[]){
    }
 }
 
+//UI helper
 void displayChoices(){
    cout << setw(80) << left << "Enter in a new song's info " << right << "(n)" << endl;
    cout << setw(80) << left << "Show or display songs current loaded " << right << "(d)" << endl;
@@ -187,14 +189,10 @@ void displayChoices(){
    cout << setw(80) << left << "Terminate or quit the program " << right << "(q)" << endl;
 }
 
+//display all songs currently loaded
 void displaySongs(const Song songs[]){
    //header
-   cout << setw(10) << left << "Index"
-        << setw(30) << left << "Title" 
-        << setw(45) << left << "Artist" 
-        << setw(10) << left << "Duration" 
-        << setw(20) << left << "Album" 
-        << endl; 
+   displaySongHeader();
    int index = 0;
    while (isValid(songs[index])){
    char duration[CHAR_MAX];
@@ -210,12 +208,14 @@ void displaySongs(const Song songs[]){
    cout << endl;
 }
 
+//helper to get length of Songs array
 int countSongs(Song songs[]){
    int i = 0;
    for (; isValid(songs[i]); i++);
    return i;
 }     
-   
+
+//load songs from the filesystem   
 bool get(Song songs[], const char filename[], unsigned int numLines){
    bool loaded = false;
    ifstream in(filename);
@@ -239,6 +239,8 @@ bool get(Song songs[], const char filename[], unsigned int numLines){
    }
    return loaded;
 }
+
+//write out songs to the filesystem
 bool writeOut(Song songs[], const char filename[], unsigned int numLines){
    bool written = false;
    ofstream out(filename);
@@ -257,7 +259,7 @@ bool writeOut(Song songs[], const char filename[], unsigned int numLines){
    }
    return written;
 }
-//ui
+
 template <class T> void get(T &var){
     T val;
     cin >> val;
@@ -270,7 +272,7 @@ template <class T> void get(T &var){
    cin.ignore(CHAR_MAX,'\n');
    var = val;       
 }
-//ui
+
 void get(char str[], unsigned int size){
    cin.get(str, size, '\n');
    while(!cin){
@@ -281,7 +283,7 @@ void get(char str[], unsigned int size){
    }
    cin.ignore(CHAR_MAX,'\n');
 }
-//make a private method to a wrapper class that opens a file and returns it's contents
+
 unsigned int getNumLines(const char filename[]){
    ifstream in(filename);
    char line[CHAR_MAX];
@@ -295,6 +297,7 @@ unsigned int getNumLines(const char filename[]){
    return numLines;
 }
 
+//checks that there's at least one character in each field
 bool isValid(Song song){
    bool valid = strlen(song.title) 
        && strlen(song.artist) 
