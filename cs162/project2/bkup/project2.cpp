@@ -5,7 +5,7 @@
 #include <fstream>
 #include <cstdlib>
 using namespace std;
-
+//TODO: change seconds and minutes to ints using getline and atoi then write with just >> duration_seconds
 struct Song {
    char title[CHAR_MAX];
    char artist[CHAR_MAX];
@@ -27,6 +27,9 @@ int countSongs(Song songs[]);
 void displaySongs(const Song songs[]);
 void displayChoices();
 void addSong(Song songs[]);
+void removeSong(Song songs[], unsigned int index);
+
+
 
 int main(){
    //greeting
@@ -46,13 +49,12 @@ int main(){
    switch (input){
       case 'n': 
          addSong(songs);
-         cin.ignore('\n');
          break;
       case 'd':
          displaySongs(songs);
          break;
       case 'r':
-         cout << "remove" << endl;
+         removeSong(songs,0); 
          break;
       case 'a':
          cout << "srch by artist" << endl;
@@ -70,6 +72,14 @@ int main(){
    } 
    return 0;
 }
+void removeSong(Song songs[], unsigned int index){
+   //int length = countSongs(songs);
+   Song s[MAXSONGS] = songs;
+   //TODO:fix me
+}
+
+
+
 void addSong(Song songs[]){
    unsigned int length = countSongs(songs);
    Song temp;
