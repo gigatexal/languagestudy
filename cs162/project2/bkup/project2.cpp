@@ -27,7 +27,7 @@ int countSongs(Song songs[]);
 void displaySongs(const Song songs[]);
 void displayChoices();
 void addSong(Song songs[]);
-void removeSong(Song songs[], unsigned int index);
+void removeSong(Song songs[]);
 
 
 
@@ -54,7 +54,8 @@ int main(){
          displaySongs(songs);
          break;
       case 'r':
-         removeSong(songs,0); 
+         removeSong(songs);
+         displaySongs(songs); 
          break;
       case 'a':
          cout << "srch by artist" << endl;
@@ -72,10 +73,21 @@ int main(){
    } 
    return 0;
 }
-void removeSong(Song songs[], unsigned int index){
-   //int length = countSongs(songs);
-   Song s[MAXSONGS] = songs;
-   //TODO:fix me
+void removeSong(Song songs[]){
+   int length = countSongs(songs);
+   if (length == 0){
+      cout << "************* There are no songs to delete. *************** " << endl;
+      return;
+   }
+   int index;
+   cout << "\nDelete a song from the database." << endl;
+   cout << "Enter the index of the song you wish you delete: ";
+   get(index); 
+   while (index <= length){
+      songs[index] = songs[index+1];
+      index++;
+   }   
+   cout << "The song has been deleted. " <<endl;
 }
 
 
