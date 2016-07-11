@@ -1,29 +1,29 @@
 #include <iostream>
 #include <cstring>
+#include <stdlib.h>
+#include <stdio.h>
 using namespace std;
 
 struct test {
    char *str;
 };
 
+
 int main(){
-test t;
-strcpy(t.str,"this is a test");
-cout << t.str << endl;
-strcpy(t.str,"");
-cout << t.str << endl;
 
-char tst[127];
-cout << strncpy(tst,
+char s[128];
 
-"127 woot sakldjflksjdflksjdflkjasdlkfjslkdjf;lskdjflk;sjdflksjaflksajdflksjadflk;sjaflaksjdflksajdflsakdjflksajdflskajdflskjdflksdjflsakjdflskajdflsakjdflksajdsalkjdfklsjdflkjsdfkljsakljflskajdflksadjfklsdajflksajdflk;sajdfkl;sajdflksadjfsklajflka;sjdflksajdfskla;jdfslkajfslk;ajfsak;ljfs;klajfsalk;jfsakl;jdfslkajfslka;djfsal;kjdflk;asjdflsk;ajfsl;kadjfslka;jfs;alkjdfslak;jfsalk;jdflsakjdfsalkjdfsklajflksa;jflskajdflk;sajfslk;ajdfklsajdfslkajflskajfdlskajdfslakjfslak;jdfslkajfsalkjfsalk;jdfsla;kdjfsalkjfslakdjfsalkdjfslakdjflsakjdflsa;kdjflask;jfslak;jdfaslkdjfslkadjflska;djfaslk;djfslkadjfslakdjfslakdjfaslkjdfalskdjf;lkasdjf;lksadjf;lksadjf;lkasdjfklsadjf;lksadjff"
-
-,sizeof(tst)) << endl;
-
-char *s = "127 woot sakldjflksjdflksjdflkjasdlkfjslkdjf;lskdjflk;sjdflksjaflksajdflksjadflk;sjaflaksjdflksajdflsakdjflksajdflskajdflskjdflksdjflsakjdflskajdflsakjdflksajdsalkjdfklsjdflkjsdfkljsakljflskajdflksadjfklsdajflksajdflk;sajdfkl;sajdflksadjfsklajflka;sjdflksajdfskla;jdfslkajfslk;ajfsak;ljfs;klajfsalk;jfsakl;jdfslkajfslka;djfsal;kjdflk;asjdflsk;ajfsl;kadjfslka;jfs;alkjdfslak;jfsalk;jdflsakjdfsalkjdfsklajflksa;jflskajdflk;sajfslk;ajdfklsajdfslkajflskajfdlskajdfslakjfslak;jdfslkajfsalkjfsalk;jdfsla;kdjfsalkjfslakdjfsalkdjfslakdjflsakjdflsa;kdjflask;jfslak;jdfaslkdjfslkadjflska;djfaslk;djfslkadjfslakdjfslakdjfaslkjdfalskdjf;lkasdjf;lksadjf;lksadjf;lkasdjfklsadjf;lksadjff";
+strncpy(s,"4",sizeof(s));
 cout << s << endl;
 
-cout << strlen (s) << endl;
+int duration = atoi(s);
+
+if (duration < 10){
+   strncpy(s,"",sizeof(s));
+   strncpy(strncpy(s,"0",sizeof(s)),char(duration),sizeof(s));
+}
+cout << s << endl;
 
 return 0;
+
 }

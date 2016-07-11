@@ -23,37 +23,33 @@ unsigned int getNumLines(const char filename[]);
 bool isValid(Song song);
 bool get(Song songs[], const char filename[], unsigned int numLines);
 bool writeOut(Song songs[], const char filename[], unsigned int numLines);
-
-
-
+int countSongs(Song songs[]);
+void displaySongs(const Song songs[]);
+void displayChoices();
+void addSong(Song songs[]);
 
 int main(){
+   //greeting
+   cout << setw(80) << left << "WELCOME TO THE SONGS DATABASE\n" << endl;
+   //DB
    Song songs[MAXSONGS];
+   //Populate DB
    get(songs,FILENAME,getNumLines(FILENAME));
-   int numSongs = 0;
-   for (auto s: songs){
-      if (isValid(s)){
-         numSongs++;
-       }
-   }
-   cout << numSongs << endl;  
+   //Initial display
+   displaySongs(songs);
    //begin UI
    char input = 'n';
    while (input != 'q'){
-   cout << setw(60) << setfill('_') << left << "Enter in a new song's info " << right << "(n)" << endl;
-   cout << setw(60) << setfill('_') << left << "Display currently loaded songs from the DB " << right << "(d)" << endl;
-   cout << setw(60) << setfill('_') << left << "Remove a song by a given index " << right << "(r)" << endl;
-   cout << setw(60) << setfill('_') << left << "Search for songs by artist " << right << "(a)" << endl;
-   cout << setw(60) << setfill('_') << left << "Search for songs by album " << right << "(b)" << endl;
-   cout << setw(60) << setfill('_') << left << "Quit the program " << right << "(q)" << endl;
+   displayChoices();
    cout << "Enter in your selection here: ";
    get(input);
    switch (input){
       case 'n': 
-         cout << "new song" << endl;
+         addSong(songs);
+         cin.ignore('\n');
          break;
       case 'd':
-         cout << "display" << endl;
+         displaySongs(songs);
          break;
       case 'r':
          cout << "remove" << endl;
@@ -74,7 +70,63 @@ int main(){
    } 
    return 0;
 }
-   
+void addSong(Song songs[]){
+   unsigned int length = countSongs(songs);
+   Song temp;
+   unsigned int duration_minutes;
+   unsigned int duration_seconds;
+   cout << "Enter in the song's title: ";
+   get(temp.title,CHAR_MAX);
+   cout << "Enter in the song's artist: ";
+   get(temp.artist,CHAR_MAX);
+   cout << "Enter in the song's duration in minutes: ";
+   get(temp.duration_minutes,CHAR_MAX);
+   cout << "Enter in the song's duration in seconds (prepend a zero for entries less than 10 seconds): ";//atoi
+   get(temp.duration_seconds,CHAR_MAX);   
+   cout << "Enter in the album the song belongs to: ";
+   get(temp.album,CHAR_MAX);
+   if (length < MAXSONGS && isValid(temp)){
+      songs[length++] = temp;
+   }
+}
+
+void displayChoices(){
+   cout << setw(80) << left << "Enter in a new song's info " << right << "(n)" << endl;
+   cout << setw(80) << left << "Show or display songs current loaded " << right << "(d)" << endl;
+   cout << setw(80) << left << "Delete or remove a song by a given index " << right << "(r)" << endl;
+   cout << setw(80) << left << "Search for songs by artist " << right << "(a)" << endl;
+   cout << setw(80) << left << "Search for songs by album " << right << "(b)" << endl;
+   cout << setw(80) << left << "Terminate or quit the program " << right << "(q)" << endl;
+}
+
+void displaySongs(const Song songs[]){
+   //header
+   cout << setw(10) << left << "Index"
+        << setw(30) << left << "Title" 
+        << setw(45) << left << "Artist" 
+        << setw(10) << left << "Duration" 
+        << setw(20) << left << "Album" 
+        << endl; 
+   int index = 0;
+   while (isValid(songs[index])){
+   char duration[CHAR_MAX];
+   strcpy(duration,"");
+   cout << setw(10) << left << index
+        << setw(30) << left << songs[index].title 
+        << setw(45) << left << songs[index].artist
+        << setw(10) << left << strcat(strcat(strcat(duration,songs[index].duration_minutes),":"),songs[index].duration_seconds)  
+        << setw(20) << left << songs[index].album
+        << endl;
+        index++;
+   }
+   cout << endl;
+}
+
+int countSongs(Song songs[]){
+   int i = 0;
+   for (; isValid(songs[i]); i++);
+   return i;
+}     
    
 bool get(Song songs[], const char filename[], unsigned int numLines){
    bool loaded = false;
