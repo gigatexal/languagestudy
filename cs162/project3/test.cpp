@@ -1,21 +1,29 @@
 #include <iostream>
-#include <cstring>
 #include <fstream>
+#include <cstring>
+#include <cstdlib>
+#include "Song.h"
 using namespace std;
 
-struct Test {
-   char* name;
-   int i;
-   int j;
-};
+struct Loader {
+   char title[128];
+   char artist[128];
+   char album[128];
+   int length_minutes;
+   int length_seconds;
+}
 
 int main(){
 
-ifstream in("sample.txt");
-Test t[10];
+Song songs[100];
 
-Test tt;
-//getline and splittokens or get
+fstream in("test.txt");
+
+Loader l;
+
+while (in && s.getArtist(getline(in,l.title,sizeof(Song::MAX_SIZE)))
+          &&
+   
 
 return 0;
 }

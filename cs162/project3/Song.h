@@ -1,17 +1,27 @@
 class Song {
-   static const int MAX_CHAR = 1024;
    public:
       Song();
-      Song(char* title, char* artist, char* album, int length_minutes; int length_seconds);
-      ~Song();
+      Song(char* title, char* artist, char* album, int length_minutes, int length_seconds);
+      static const int MAX_CHAR = 1024;
+   
       //setters
-      void  setTitle(const char* title);
-      char* getTitle() const;
+      void setTitle(char* title);
+      void setArtist(char* artist);
+      void setAlbum(char* album);
+      void setLengthMinutes(int length_minutes);
+      void setLengthSeconds(int length_seconds);
+      
+      //getters
+      const char* getTitle() const;
+      const char* getArtist() const;      
+      const char* getAlbum() const; 
+      int         getLengthMinutes() const;
+      int         getLengthSeconds() const;     
 
    private:
-      char* _title;
-      char* _artist;
-      char* _album;
+      char _title[Song::MAX_CHAR];
+      char _artist[Song::MAX_CHAR];
+      char _album[Song::MAX_CHAR];
       int _length_minutes;
       int _length_seconds;      
 };
