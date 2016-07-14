@@ -17,6 +17,8 @@ class Song {
       const char* getAlbum() const; 
       int         getLengthMinutes() const;
       int         getLengthSeconds() const;     
+      //For Debug only
+      void        print() const;
 
    private:
       char _title[Song::MAX_CHAR];
