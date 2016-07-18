@@ -17,6 +17,8 @@ class Song {
       const char* getAlbum() const; 
       int         getLengthMinutes() const;
       int         getLengthSeconds() const;     
+//      const char* getSongRuntime() const;
+      
       //For Debug only
       void        print() const;
 

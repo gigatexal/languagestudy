@@ -1,5 +1,5 @@
 #include "Song.h"
-#include <iostream>
+#include <iostream>//can remove when not debugging
 #include <cstring>
 
 //set some initial dummy variables
@@ -7,8 +7,8 @@ Song::Song(){
    strncpy(_title,"title",Song::MAX_CHAR);
    strncpy(_artist,"artist",Song::MAX_CHAR);
    strncpy(_album,"album",Song::MAX_CHAR);
-   _length_minutes = 1;
-   _length_seconds = 59;
+   _length_minutes = 0;
+   _length_seconds = 0;
 }   
 
 Song::Song(char* title, char* artist, char* album, int minutes, int seconds){
@@ -72,10 +72,14 @@ void Song::print() const {
         << this->getLengthSeconds()
         << std::endl;
 }    
-
-
-
-
+/*
+const char* getSongRuntime() const{
+   char runtime[Song::MAX_CHAR];
+   strncpy(runtime,"test",sizeof(runtime));
+   return runtime;
+   //strncpy(runtime,
+}
+*/
 
 
 

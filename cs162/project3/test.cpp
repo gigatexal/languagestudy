@@ -36,9 +36,10 @@ while (      in.getline(l.title,Song::MAX_CHAR,';')
              songs[i] = s;
              i++;         
       }
-songs[0].print();
-songs[1].print();
-songs[2].print();
+
+for (auto& s : songs){
+    s.print();
+}
 
 return 0;
 }
