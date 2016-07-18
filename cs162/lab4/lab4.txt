@@ -1,0 +1,14 @@
+Student::Student(const char initId[], double gpa){
+   strcpy(this->id,initId);
+   this->gpa = gpa;
+}
+
+bool Student::isLessThanByID(const Student& aStudent) const {
+   return this->id < aStudent.id;
+}
+
+
+G10	3.9
+G20	3.5
+uhmm ...
+about right!

@@ -3,6 +3,7 @@
 #include <cstring>
 #include <cstdlib>
 #include "Song.h"
+#include "DB.h"
 using namespace std;
 
 const int MAX_SONGS = 100;
@@ -18,15 +19,15 @@ struct Loader {
 
 int main(){
 
-Song songs[MAX_SONGS];
+   Song songs[MAX_SONGS];
 
-fstream in("test.txt");
+   fstream in("test.txt");
 
-//put this into DB class
-Loader l;
+   //put this into DB class
+   Loader l;
 
-int i = 0;
-while (      in.getline(l.title,Song::MAX_CHAR,';')
+   int i = 0;
+   while (      in.getline(l.title,Song::MAX_CHAR,';')
           && in.getline(l.artist,Song::MAX_CHAR,';')
           && in.getline(l.album,Song::MAX_CHAR,';')
           && in.getline(l.length_minutes,Song::MAX_CHAR,';')
@@ -36,11 +37,6 @@ while (      in.getline(l.title,Song::MAX_CHAR,';')
              songs[i] = s;
              i++;         
       }
-
-for (auto& s : songs){
-    s.print();
-}
-
-return 0;
+   return 0;
 }
 

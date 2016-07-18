@@ -1,0 +1,40 @@
+bool insert(int val, int intList[], int& size) {
+   if (size == 0){
+      intList[size] = val;
+      size++;
+      return true;
+   }
+   //find the index of where to add the value
+   int i = 0;
+   for (; i < size; i++){
+       if (val < intList[i]){
+           break;
+       }
+   }
+   //add the value shifting over values where needed, does bounds checking
+   int index = i;
+   if (size + 1 < ARRAY_CAP){
+       for (int i = index; i < size + 1; i++){
+          intList[index+ 1] = intList[index];
+       }
+       intList[index] = val;
+       size++;
+   }
+   return true;
+}
+
+
+[ ]
+
+[ 4 10 0 25 40 ]
+4
+10
+0
+25
+40
+the list doesn't have 5
+the list doesn't have 10
+the list doesn't have 40
+the list doesn't have 4
+
+[ ]

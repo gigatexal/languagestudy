@@ -1,0 +1,4 @@
+G10	3.9
+G20	3.5
+uhmm ...
+about right!
