@@ -72,15 +72,6 @@ void Song::print() const {
         << this->getLengthSeconds()
         << std::endl;
 }    
-/*
-const char* getSongRuntime() const{
-   char runtime[Song::MAX_CHAR];
-   strncpy(runtime,"test",sizeof(runtime));
-   return runtime;
-   //strncpy(runtime,
-}
-*/
-
 
 
 

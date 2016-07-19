@@ -1,18 +1,6 @@
+#include <fstream>
+#include <iostream>
 #include "DB.h"
-/*
-class DB {
-   public:
-      DB();
-      void add(Song s);
-      void add(Song s, unsigned int index);
-      void remove(unsigned int index);
-      unsigned int getCurrSize() const;
-   private:
-      Song songs[DB::maxSize];
-      int currSize;
-      int maxSize;
-};
-*/
 
 DB::DB(){
    this->currSize = 0;
@@ -36,6 +24,10 @@ void DB::add(Song s, unsigned int index){
    }
 }   
 
+Song DB::get(unsigned int index){
+   return songs[index];
+}
+
 void DB::remove(unsigned int index){
    if ((this->currSize > 0) && (this->currSize < maxSize)){
       for (int i = 0; i < currSize; i++){
@@ -44,31 +36,40 @@ void DB::remove(unsigned int index){
       this->currSize--;
    }
 }
-
 /*
-//add to DB class
-struct Loader {
-   char title[128];
-   char artist[128];
-   char album[128];
-   char length_minutes[128];
-   char length_seconds[128];
-};
+const char* Song::getTitle() const {
+   return _title;
+}
 
-fstream in("test.txt");
+const char* Song::getArtist() const {
+   return _artist;
+}
 
-//put this into DB class
-Loader l;
+const char* Song::getAlbum() const {
+   return _album;
+}
 
-int i = 0;
-while (      in.getline(l.title,Song::MAX_CHAR,';')
-          && in.getline(l.artist,Song::MAX_CHAR,';')
-          && in.getline(l.album,Song::MAX_CHAR,';')
-          && in.getline(l.length_minutes,Song::MAX_CHAR,';')
-          && in.getline(l.length_seconds,Song::MAX_CHAR,'\n')
-          && i < 100){
-             Song s(l.title,l.artist,l.album,atoi(l.length_minutes),atoi(l.length_seconds));
-             songs[i] = s;
-             i++;
-      }
+int Song::getLengthMinutes() const {
+   return _length_minutes;
+}
+
+int Song::getLengthSeconds() const {
+   return _length_seconds;
+}
 */
+
+bool DB::save(char filename[1024]){
+  std::ofstream file(filename);
+  bool success = false;
+  if (file){ 
+     for (int i = 0; i < currSize; i++){
+         file << songs[i].getTitle()         << ";"
+              << songs[i].getArtist()        << ";"
+              << songs[i].getLengthMinutes() << ";"
+              << songs[i].getLengthSeconds() << ";"
+              << songs[i].getAlbum()         << std::endl; 
+     }
+     success = true;
+  }
+  return success;
+}
