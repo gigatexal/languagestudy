@@ -3,52 +3,50 @@
 #include <cstring>
 #include <cstdlib>
 #include "DB.h"
+#include "UI.h"
+#include <iomanip>
 using namespace std;
-
-DB loadData(const char filename[]);
-
 
 const int MAX_SONGS = 100;
 const char songsFile[128] = "songs.txt";
 
-struct Loader {
-   char title[128];
-   char artist[128];
-   char album[128];
-   char length_minutes[128];
-   char length_seconds[128];
-};
+void showAllSongs(DB& db);
+
 
 int main(){
-   Song s;
-   database = loadData(songsFile); 
-   s = database.get(1);
-   s.print(); 
+   UI ui;
+   DB database;
+   database.loadData(songsFile);
+   Song song;
+   cout << "Welcome to the songs database " << endl;
+
+   ui.displayChoices();
+   ui.displaySongHeader();
+   showAllSongs(database);
+
    return 0;
 }
-
-DB loadData(const char filename[]){
-   struct Loader {
-      char title[128];
-      char artist[128];
-      char album[128];
-      char length_minutes[128];
-      char length_seconds[128];
-   };
-   DB db;
-   Loader l;
-   fstream in(filename);
-   int i = 0;
-   while (   in.getline(l.title,Song::MAX_CHAR,';')
-          && in.getline(l.artist,Song::MAX_CHAR,';')
-          && in.getline(l.length_minutes,Song::MAX_CHAR,';')
-          && in.getline(l.length_seconds,Song::MAX_CHAR,';')
-          && in.getline(l.album,Song::MAX_CHAR,'\n')
-          && i < MAX_SONGS){
-             Song s(l.title,l.artist,l.album,atoi(l.length_minutes),atoi(l.length_seconds));
-             db.add(s);
-             i++;
-      }
-   return db; 
+/*
+void UI::displaySongHeader(){
+      cout << setw(10) << left << "Index"
+           << setw(30) << left << "Title"
+           << setw(45) << left << "Artist"
+           << setw(10) << left << "Duration"
+           << setw(20) << left << "Album"
+           << endl;
 }
-   
+*/
+
+void showAllSongs(DB& db){
+         for (int i = 0; i < db.getCurrSize(); i++){
+             Song s = db.get(i);
+             cout << setw(10) << left << i
+                 << setw(30) << left << s.getTitle()
+                 << setw(45) << left << s.getArtist()
+                 << setw(5) << right << s.getLengthMinutes() << "m" 
+                 << setw(5) << left << s.getLengthSeconds() 
+                 << setw(20) << left << s.getAlbum()
+                 << endl;
+         }
+
+}

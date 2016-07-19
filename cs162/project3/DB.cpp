@@ -6,7 +6,7 @@ DB::DB(){
    this->currSize = 0;
 }
 
-unsigned int DB::getCurrSize() const {
+const unsigned int DB::getCurrSize() const {
    return this->currSize;
 }
 
@@ -72,4 +72,31 @@ bool DB::save(char filename[1024]){
      success = true;
   }
   return success;
+}
+
+bool DB::loadData(const char filename[]){
+   bool success = false;
+   struct Loader {
+      char title[128];
+      char artist[128];
+      char album[128];
+      char length_minutes[128];
+      char length_seconds[128];
+   };
+   Loader l;
+   std::ifstream in(filename);
+   int i = 0;
+   while (   in.getline(l.title,Song::MAX_CHAR,';')
+          && in.getline(l.artist,Song::MAX_CHAR,';')
+          && in.getline(l.length_minutes,Song::MAX_CHAR,';')
+          && in.getline(l.length_seconds,Song::MAX_CHAR,';')
+          && in.getline(l.album,Song::MAX_CHAR,'\n')
+          && i < Song::MAX_CHAR){
+             Song s(l.title,l.artist,l.album,atoi(l.length_minutes),atoi(l.length_seconds));
+             songs[i] = s; 
+             i++;
+             success = true;
+      }
+   currSize = i;
+   return success;    
 }

@@ -1,6 +1,7 @@
 #include "UI.h"
 #include <iomanip>
 #include <iostream>
+using namespace std;
 
 void UI::displayChoices(){
    cout << setw(80) << left << "Enter in a new song's info " << right << "(n)" << endl;
@@ -11,7 +12,7 @@ void UI::displayChoices(){
    cout << setw(80) << left << "Terminate or quit the program " << right << "(q)" << endl;
 }
 
-void displaySongHeader(){
+void UI::displaySongHeader(){
       cout << setw(10) << left << "Index"
            << setw(30) << left << "Title"
            << setw(45) << left << "Artist"
@@ -20,26 +21,27 @@ void displaySongHeader(){
            << endl;
 }
 
-template <class T> void get(T &var){
+template <class T> void UI::get(T &var){
     T val;
     cin >> val;
     while (!cin){
       cout << "Data entered was invalid" << endl;
       cin.clear();
-      cin.ignore(CHAR_MAX,'\n');
+      cin.ignore(UI::MAX_CHAR,'\n');
       cin >> val;
    }
-   cin.ignore(CHAR_MAX,'\n');
+   cin.ignore(UI::MAX_CHAR,'\n');
    var = val;
 }
 
-void get(char str[], unsigned int size){
+void UI::get(char str[], unsigned int size){
    cin.get(str, size, '\n');
    while(!cin){
       cout << "Field cannnot be empty. Please enter in something." << endl;
       cin.clear();
-      cin.ignore(CHAR_MAX,'\n');
+      cin.ignore(UI::MAX_CHAR,'\n');
       cin.get(str, size, '\n');
    }
-   cin.ignore(CHAR_MAX,'\n');
+   cin.ignore(UI::MAX_CHAR,'\n');
 }
+
