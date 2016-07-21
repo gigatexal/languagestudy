@@ -21,6 +21,7 @@ void UI::displaySongHeader(){
            << endl;
 }
 
+
 template <class T> void UI::get(T &var){
     T val;
     cin >> val;
