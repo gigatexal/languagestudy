@@ -36,27 +36,6 @@ void DB::remove(unsigned int index){
       this->currSize--;
    }
 }
-/*
-const char* Song::getTitle() const {
-   return _title;
-}
-
-const char* Song::getArtist() const {
-   return _artist;
-}
-
-const char* Song::getAlbum() const {
-   return _album;
-}
-
-int Song::getLengthMinutes() const {
-   return _length_minutes;
-}
-
-int Song::getLengthSeconds() const {
-   return _length_seconds;
-}
-*/
 
 bool DB::save(char filename[1024]){
   std::ofstream file(filename);
@@ -71,6 +50,7 @@ bool DB::save(char filename[1024]){
      }
      success = true;
   }
+  file.close();
   return success;
 }
 
@@ -98,5 +78,6 @@ bool DB::loadData(const char filename[]){
              success = true;
       }
    currSize = i;
+   in.close();
    return success;    
 }
