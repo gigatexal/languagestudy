@@ -13,6 +13,8 @@ const char songsFile[128] = "songs.txt";
 void greeting();
 void displayMenu();
 void displaySongHeader();
+void displaySong(DB &db, int index);
+void displayAllSongs(DB &db);
 Song newSong();
 bool findSongsByArtist(char artist[]);
 bool findSongsByAlbum(char album[]);
@@ -24,11 +26,47 @@ int main(){
    bool hasData = database.loadData(songsFile);
    if (hasData){
       displayMenu();
+      cout << endl;
+      displayAllSongs(database);
    }
-   Song s = newSong();
-   database.add(s);
-   displaySongHeader();
-   cout << database.get(database.getCurrSize()-1).getTitle() << endl;     
+   Song s;
+   char input = 'n'; 
+   /*database.add(s);
+   displaySong(database,database.getCurrSize()-1);     
+   cout << endl;
+   displayAllSongs(database);
+   */
+   while (input != 'q') {
+   cout << "Enter in your selection here: ";
+   get(input);
+   
+   switch (input){
+      case 'n':
+         s = newSong();
+         database.add(s);
+         break;
+      case 'd':
+         displayAllSongs(database);
+         break;
+      case 'r':
+         //removeSong(songs);
+         displaySong(database,1);
+         //displayAllSongs(database);
+         break;
+      case 'a':
+         break;
+      case 'b':
+         break;
+      case 'q':
+         cout << "quit" << endl;
+         break;
+      default:
+         cout << "please enter in a valid selection" << endl;
+         break;
+      }
+    } 
+    
+   
    return 0;
 }
 
@@ -86,6 +124,32 @@ void displaySongHeader(){
            << setw(20) << left << "Album"
            << endl;
 }
+
+void displaySong(DB &db, int index){
+   //displaySongHeader();
+   int maxIndex = db.getCurrSize();
+   cout << maxIndex << endl;
+   if (index <= maxIndex){
+      cout << setw(10) << left << index 
+           << setw(30) << left << db.get(index).getTitle()
+           << setw(45) << left << db.get(index).getArtist()
+           << setw(4) << left << db.get(index).getLengthMinutes() << setw(1) << left << "m"
+           << setw(4) << left << db.get(index).getLengthSeconds() << setw(1) << left << "s "
+           << setw(20) << left << db.get(index).getAlbum()
+           << endl;
+   }  
+}
+
+void displayAllSongs(DB &db) {
+   int maxIndex = db.getCurrSize();
+   for (int i = 0; i < maxIndex; i++){
+      cout << maxIndex << endl;
+      displaySong(db,i);
+   }
+}
+   
+
+
 
 template<class T> void get(T &var){
     T val;
