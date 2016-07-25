@@ -158,14 +158,13 @@ void displaySongHeader(){
 }
 
 void displaySong(DB &db, int index){
-   //displaySongHeader();
    int maxIndex = db.getCurrSize();
    if (index <= maxIndex){
       cout << setw(10) << left << index 
            << setw(30) << left << db.get(index).getTitle()
            << setw(45) << left << db.get(index).getArtist()
-           << setw(4) << left << db.get(index).getLengthMinutes() << setw(1) << left << "m"
-           << setw(4) << left << db.get(index).getLengthSeconds() << setw(1) << left << "s "
+           << setw(4) << right << db.get(index).getLengthMinutes() << setw(1) << "m"
+           << setw(4) << left << db.get(index).getLengthSeconds()
            << setw(20) << left << db.get(index).getAlbum()
            << endl;
    }  
