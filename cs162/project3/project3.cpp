@@ -31,7 +31,7 @@ int main(){
    }
    Song s;
    char input = 'n'; 
-   unsigned int secondaryInput = 0;
+   int secondaryInput = 0;
    char userEntry[128]; 
    while (input != 'q') {
    cout << "Enter in your selection here: ";
