@@ -25,17 +25,13 @@ int main(){
    DB database;
    bool hasData = database.loadData(songsFile);
    if (hasData){
-      displayMenu();
-      cout << endl;
+      displaySongHeader();
       displayAllSongs(database);
+      displayMenu();
    }
    Song s;
    char input = 'n'; 
-   /*database.add(s);
-   displaySong(database,database.getCurrSize()-1);     
-   cout << endl;
-   displayAllSongs(database);
-   */
+   int  secondaryInput = 0;
    while (input != 'q') {
    cout << "Enter in your selection here: ";
    get(input);
@@ -49,9 +45,11 @@ int main(){
          displayAllSongs(database);
          break;
       case 'r':
-         //removeSong(songs);
-         displaySong(database,1);
-         //displayAllSongs(database);
+         cout << "Enter in the index of the song you wish to delete :";
+         get(secondaryInput);
+         database.remove(secondaryInput);
+         cout << "Song deleted" << endl;
+         displayAllSongs(database);
          break;
       case 'a':
          break;
@@ -66,7 +64,6 @@ int main(){
       }
     } 
     
-   
    return 0;
 }
 
@@ -75,13 +72,6 @@ void greeting(){
 }
 
 Song newSong(){
-      /*
-      void setTitle(char* title);
-      void setArtist(char* artist);
-      void setAlbum(char* album);
-      void setLengthMinutes(int length_minutes);
-      void setLengthSeconds(int length_seconds);
-      */
    struct Loader {
       char title[DB::maxSize];
       char artist[DB::maxSize];
@@ -128,7 +118,6 @@ void displaySongHeader(){
 void displaySong(DB &db, int index){
    //displaySongHeader();
    int maxIndex = db.getCurrSize();
-   cout << maxIndex << endl;
    if (index <= maxIndex){
       cout << setw(10) << left << index 
            << setw(30) << left << db.get(index).getTitle()
@@ -143,14 +132,10 @@ void displaySong(DB &db, int index){
 void displayAllSongs(DB &db) {
    int maxIndex = db.getCurrSize();
    for (int i = 0; i < maxIndex; i++){
-      cout << maxIndex << endl;
       displaySong(db,i);
    }
 }
    
-
-
-
 template<class T> void get(T &var){
     T val;
     cin >> val;
