@@ -8,7 +8,7 @@
 using namespace std;
 
 const int MAX_SONGS = DB::maxSize;
-const char songsFile[128] = "songs.txt";
+char songsFile[128] = "songs.txt";
 
 void greeting();
 void displayMenu();
@@ -31,7 +31,8 @@ int main(){
    }
    Song s;
    char input = 'n'; 
-   int  secondaryInput = 0;
+   unsigned int secondaryInput = 0;
+   char userEntry[128]; 
    while (input != 'q') {
    cout << "Enter in your selection here: ";
    get(input);
@@ -40,9 +41,15 @@ int main(){
       case 'n':
          s = newSong();
          database.add(s);
+         cout << endl;
+         displayMenu();
+         cout << endl;
          break;
       case 'd':
          displayAllSongs(database);
+         cout << endl;
+         displayMenu();
+         cout << endl;
          break;
       case 'r':
          cout << "Enter in the index of the song you wish to delete :";
@@ -50,10 +57,44 @@ int main(){
          database.remove(secondaryInput);
          cout << "Song deleted" << endl;
          displayAllSongs(database);
+         cout << endl;         
+         displayMenu();
+         cout << endl;
          break;
       case 'a':
+         cout << "Find all the songs by a given artist: enter in an artist here ";
+         get(userEntry,128);
+         displaySongHeader();
+         for (int i = 0; i < database.getCurrSize(); i++){
+            s = database.get(i);
+            if (strcmp(s.getArtist(),userEntry) == 0){
+               displaySong(database,i);
+            }
+         }   
+         cout << endl;
+         displayMenu();
+         cout << endl;
          break;
       case 'b':
+         cout << "Find all the songs in a given album: enter in the album here: ";
+         get(userEntry,128);
+         displaySongHeader();
+         for (int i = 0; i < database.getCurrSize(); i++){
+            s = database.get(i);
+            if (strcmp(s.getAlbum(),userEntry) == 0){
+               displaySong(database,i);
+            }
+         }
+         cout << endl;
+         displayMenu();
+         cout << endl;
+         break;
+      case 's':
+         database.save(songsFile);
+         cout << "Saved songs currently Loaded to disk. " << endl;
+         cout << endl;
+         displayMenu();
+         cout << endl;
          break;
       case 'q':
          cout << "quit" << endl;
@@ -103,6 +144,7 @@ void displayMenu(){
    cout << setw(80) << left << "Delete or remove a song by a given index " << right << "(r)" << endl;
    cout << setw(80) << left << "Search for songs by artist " << right << "(a)" << endl;
    cout << setw(80) << left << "Search for songs by album " << right << "(b)" << endl;
+   cout << setw(80) << left << "Save currently loaded songs to disk " << right << "(s)" << endl; 
    cout << setw(80) << left << "Terminate or quit the program " << right << "(q)" << endl;
 }
 

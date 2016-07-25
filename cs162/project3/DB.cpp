@@ -29,7 +29,7 @@ Song DB::get(unsigned int index){
 }
 
 void DB::remove(unsigned int index){
-   if ((this->currSize > 0) && (this->currSize < maxSize) && (index <= this->currSize)){
+   if ((this->currSize > 0) && (this->currSize < maxSize) && (index <= this->currSize) && (index > 0)){
       for (int i = 0; i < currSize; i++){
          this->songs[i] = this->songs[i+1];
       }
