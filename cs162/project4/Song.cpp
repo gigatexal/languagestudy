@@ -10,13 +10,27 @@ Song::Song(){
    _length_minutes = 0;
    _length_seconds = 0;
 }   
-
+/*
 Song::Song(char* title, char* artist, char* album, int minutes, int seconds){
    strncpy(_title,title,Song::MAX_CHAR);
    strncpy(_artist,artist,Song::MAX_CHAR);
    strncpy(_album,album,Song::MAX_CHAR);
    _length_minutes = minutes;
    _length_seconds = seconds;
+}
+*/
+
+Song::Song(char title[], char* artist, char* album, int minutes, int seconds){
+   strncpy(_title,title,Song::MAX_CHAR);
+   strncpy(_title,title,strlen(title));
+   strncpy(_artist,artist,Song::MAX_CHAR);
+   strncpy(_album,album,Song::MAX_CHAR);
+   _length_minutes = minutes;
+   _length_seconds = seconds;
+}
+
+Song::~Song(){
+   //delete _title;
 }
 //setters
 void Song::setTitle(char* title){

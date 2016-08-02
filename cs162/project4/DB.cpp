@@ -6,10 +6,27 @@ DB::DB(){
    this->currSize = 0;
 }
 
+DB::~DB(){
+   delete [] songs;
+};
+
 const unsigned int DB::getCurrSize() const {
    return this->currSize;
 }
-
+/*
+void DB::growDB(){
+   if (currSize > 2 * this->jumpAmount - 1){
+      Song tmp = new Song[this->currSize + this->jumpAmount];
+      for (int i = 0; i < currSize; i++){
+         Song s = this->get(i);
+         tmp[i] = s;
+         delete s;
+      }
+      delete [] this->songs;
+      this->songs = new Song[this->currSize + this->jumpAmount];
+     } 
+}
+*/
 void DB::add(Song s){
    if (currSize < this->maxSize){
       this->songs[currSize] = s;
@@ -26,6 +43,7 @@ void DB::add(Song s, unsigned int index){
 
 Song DB::get(unsigned int index){
    return songs[index];
+   //return this->songs[index];
 }
 
 void DB::remove(unsigned int index){
@@ -67,20 +85,34 @@ bool DB::loadData(const char filename[]){
    };
    Loader l;
    std::ifstream in(filename);
+ 
    int i = 0;
+   char dummyLine[1024];
+   while (in.getline(dummyLine,1024)){
+      ++i;
+   }
+   delete [] this->songs;
+   this->songs = new Song[i + (this->jumpAmount) ];
+   
+   in.close();
+   in.open(filename);
+   int count = 0;
    while (   in.getline(l.title,Song::MAX_CHAR,';')
           && in.getline(l.artist,Song::MAX_CHAR,';')
           && in.getline(l.length_minutes,Song::MAX_CHAR,';')
           && in.getline(l.length_seconds,Song::MAX_CHAR,';')
           && in.getline(l.album,Song::MAX_CHAR,'\n')
-         // && i < Song::MAX_CHAR
-         ){
+          ){
+          
              Song s(l.title,l.artist,l.album,atoi(l.length_minutes),atoi(l.length_seconds));
-             songs[i] = s; 
-             i++;
+             this->add(s);
+             /* 
+             Song *s = new Song(l.title,l.artist,l.album,atoi(l.length_minutes),atoi(l.length_seconds));
+             this->songs[count] = s;             
+             */
              success = true;
-      }
-   //currSize = i;
+             count++;
+   } 
    in.close();
    return success;    
 }

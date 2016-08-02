@@ -1,6 +1,6 @@
 # build an executable named myprog from myprog.c
-  All: project3.cpp
-	 g++ -Wall -std=c++11 -o app project3.cpp Song.cpp DB.cpp
+  All: project4.cpp
+	 g++ -Wall -g -std=c++11 -o app project4.cpp Song.cpp DB.cpp
 
   clean: 
 	  $(RM) app 

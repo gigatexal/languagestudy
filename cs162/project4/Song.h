@@ -1,6 +1,7 @@
 class Song {
    public:
       Song();
+      ~Song();
       Song(char* title, char* artist, char* album, int length_minutes, int length_seconds);
       static const int MAX_CHAR = 1024;
    

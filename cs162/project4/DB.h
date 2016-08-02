@@ -5,6 +5,7 @@ class DB {
    public:
       static const unsigned int maxSize = 1024;
       DB();
+      ~DB();
       //getters
       void add(Song s);
       void add(Song s, unsigned int index);
@@ -17,8 +18,11 @@ class DB {
       bool loadData(const char filename[]);     
  
    private:
-      Song songs[DB::maxSize];
+      //Song songs[DB::maxSize];
+      Song *songs = new Song[maxSize];
       int currSize;
+      const unsigned int jumpAmount = 100;
+      //void growDB();//if currSize is 90% of jump amount, grow
       //int computeInitialSize
 };
 
