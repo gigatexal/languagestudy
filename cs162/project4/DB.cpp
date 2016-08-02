@@ -54,6 +54,8 @@ bool DB::save(char filename[1024]){
   return success;
 }
 
+//count the number of lines in teh file
+//set the size of the db to this + 1
 bool DB::loadData(const char filename[]){
    bool success = false;
    struct Loader {
@@ -71,13 +73,14 @@ bool DB::loadData(const char filename[]){
           && in.getline(l.length_minutes,Song::MAX_CHAR,';')
           && in.getline(l.length_seconds,Song::MAX_CHAR,';')
           && in.getline(l.album,Song::MAX_CHAR,'\n')
-          && i < Song::MAX_CHAR){
+         // && i < Song::MAX_CHAR
+         ){
              Song s(l.title,l.artist,l.album,atoi(l.length_minutes),atoi(l.length_seconds));
              songs[i] = s; 
              i++;
              success = true;
       }
-   currSize = i;
+   //currSize = i;
    in.close();
    return success;    
 }

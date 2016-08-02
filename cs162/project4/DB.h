@@ -19,4 +19,14 @@ class DB {
    private:
       Song songs[DB::maxSize];
       int currSize;
+      //int computeInitialSize
 };
+
+/*
+   ifstream f("songs.txt");
+   int i = 0;
+   char dummyLine[5];
+   while (f.getline(dummyLine,5)){
+      ++i;
+   }
+*/
