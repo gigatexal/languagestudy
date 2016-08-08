@@ -1,0 +1,64 @@
+#include <iostream>
+using namespace std;
+
+//UI
+template <typename T>
+class Person {
+   private:
+      T data[100];
+      int size = 0;
+  
+   public:
+      Person(T elem);
+      ~Person();
+      const bool add(T elem);
+      const T get(int index) const;
+
+
+};
+
+
+
+
+
+int main() {
+   
+   
+
+   Person<int> p(1);
+   std::cout << p.get(0) << std::endl;
+   p.add(10);
+   std::cout << p.get(1) << std::endl; 
+   
+   Person<float> pp(1.01);
+   pp.add(200.01);
+   std::cout << pp.get(1) << std::endl;
+
+   return 0;
+}
+
+template <typename T>
+Person<T>::Person(T elem){
+   this->data[0] = elem;
+   this->size++;
+}
+
+template <typename T>
+Person<T>::~Person(){
+   //delete[] data;
+}
+
+template <typename T>
+const bool Person<T>::add(T elem){
+   this->data[size] = elem;
+   this->size++;
+}
+
+template <typename T>      
+const T Person<T>::get(int index) const{
+   return this->data[index];
+   
+};
+
+
+
